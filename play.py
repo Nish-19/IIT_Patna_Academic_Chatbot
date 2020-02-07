@@ -1,9 +1,6 @@
 import sys#used to take input from command line
 import time#used to find curr time.
-import random
-import datetime#used to find time lapse between two given dates.
 import mysql.connector as mysql
-import quepy#import function searches for the name in the directory and returns the contents in a variable quepy which is locally created.
 
 db = mysql.connect(#establishing connection with mysql
     host = "localhost",
