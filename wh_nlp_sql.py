@@ -1,16 +1,19 @@
 import spacy
 roll_number = '1401cs01'
 
-def create_sql(sql):
-	sql_query = 'SELECT ' + sql['Select'].text + ' FROM table_name '
+def create_sql(sql, flag):
+	sql_query = 'SELECT ' + sql['Select'] + ' FROM table_name '
 	sql_condition = 'WHERE '
 	sql_condition_dict = {}
 	for i, condition in enumerate(sql['Condition_val_type']):
 		if condition == 'XXddd':
-			sql_condition_dict['subno'] = '\'' + sql['Condition_val'][i].text + '\''
-		elif condition == 'ddddxxdd':
-			sql_condition_dict['rollno'] = '\'' + sql['Condition_val'][i].text + '\''
-	if 'rollno' not in sql_condition_dict.keys():
+			sql_condition_dict['subno'] = '\'' + sql['Condition_val'][i] + '\''
+		elif condition == 'ddddxxdd' or condition == 'ddddXXdd':
+			sql_condition_dict['rollno'] = '\'' + sql['Condition_val'][i] + '\''
+	for condition_pair in sql['additional']:
+		for key, value in condition_pair.items():
+			sql_condition_dict[key] = '\'' + value + '\''
+	if 'rollno' not in sql_condition_dict.keys() and flag == 0:
 		sql_condition_dict['rollno'] = '\'' + roll_number + '\''
 	for i, condition in enumerate(sql_condition_dict):
 		if i == 0:
@@ -37,19 +40,29 @@ def create_sql(sql):
 def dfs(vertex,past,summary, sql):
 	
 	if summary[vertex.text]['Dep']=='nsubj' and vertex.text!='what' and vertex.text!='who':
-		sql['Select']=vertex
+		sql['Select']=vertex.text
 	elif summary[vertex.text]['Dep']=='attr' and vertex.text!='what' and vertex.text!='who':
-		sql['Select']=vertex
+		sql['Select']=vertex.text
 	elif summary[vertex.text]['Dep']!='pobj' and summary[vertex.text]['Dep']!='det' and summary[past.text]['Dep']=='pobj':
-		sql['Condition_val']=past
+		sql['Condition_val']=past.text
 		sql['Condition_val_type'] = vertex.shape_
 		sql['additional'].append(vertex)
-	elif summary[vertex.text]['Dep']=='pobj' and len(summary[vertex.text]['Children'])==0 and len(sql['Select'].text)!=0:
-		sql['Condition_val'].append(vertex)
+	elif summary[vertex.text]['Dep']=='pobj' and len(summary[vertex.text]['Children'])==0 and len(sql['Select'])!=0:
+		sql['Condition_val'].append(vertex.text)
 		sql['Condition_val_type'].append(vertex.shape_)
 	for child in summary[vertex.text]['Children']:
 		dfs(child,vertex,summary, sql)
 
+def list_sql_extract(summary, sql):
+	for token, value in summary.items():
+		if value['Dep'] == 'dobj' and value['is_stop'] == False:
+			sql['Select'] = token
+		if value['Dep'] == 'pobj' and len(value['Children']) == 0:
+			sql['Condition_val'].append(token)
+			sql['Condition_val_type'].append(value['Shape'])
+		if value['Dep'] == 'pobj' and len(value['Children']) != 0:
+			if summary[value['Children'][0].text]['Dep'] != 'acl': 
+				sql['additional'].append({token : value['Children'][0].text})
 
 
 def create_dictionary(doc):
@@ -62,7 +75,7 @@ def create_dictionary(doc):
 		if token.dep_ == 'ROOT':
 			#root = token.text
 			root = token
-		summary[token.text] = {'Children' : lst, 'Dep' : token.dep_}
+		summary[token.text] = {'Children' : lst, 'Dep' : token.dep_, 'Shape' : token.shape_, 'is_stop' : token.is_stop}
 
 	# for child in summary[root]['Children']:
 	# 	print(type(child))
@@ -81,14 +94,19 @@ def create_dictionary(doc):
 	sql['additional'] = []
 	sql['Condition_val'] = []
 	sql['Condition_val_type'] = []
-	dfs(root, root, summary, sql)
+	if root.text == 'List':
+		list_sql_extract(summary, sql)
+		flag = 1
+	else:
+		dfs(root, root, summary, sql)
+		flag = 0
 	print(sql)
 	print(summary)
-	create_sql(sql)
+	create_sql(sql, flag)
 
 if __name__ == '__main__':
 	#in_path = 'E:/4thSem/inno_lab/wh_questions.txt'
-	in_path = 'E:/4thSem/inno_lab/sem_grades_questions.txt'
+	in_path = 'E:/4thSem/inno_lab/list_questions.txt'
 	nlp = spacy.load("en_core_web_sm")
 	with open(in_path) as f:
 		sentences = f.read().split('\n')
