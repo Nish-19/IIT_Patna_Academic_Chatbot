@@ -1,8 +1,9 @@
 import spacy
+from python_sql_connector import *
 roll_number = '1401cs01'
 
 def create_sql(sql, flag):
-	sql_query = 'SELECT ' + sql['Select'] + ' FROM table_name '
+	sql_query = 'SELECT ' + sql['Select'] + ' FROM sem_grades '
 	sql_condition = 'WHERE '
 	sql_condition_dict = {}
 	for i, condition in enumerate(sql['Condition_val_type']):
@@ -34,6 +35,7 @@ def create_sql(sql, flag):
 	# 		sql['Select'] = sql['additional'][0].text + '_' + sql['Condition_val'].text + '_' + sql['Select'].text
 	# 		sql_query = 'SELECT ' + sql['Select'] + ' FROM table_name ' + 'WHERE Roll_number = ' + roll_number1 + ';'
 	print(sql_query)
+	generate_output(sql_query, db)
 
 
 
@@ -107,11 +109,11 @@ def create_dictionary(doc):
 if __name__ == '__main__':
 	#in_path = 'E:/4thSem/inno_lab/wh_questions.txt'
 	in_path = 'E:/4thSem/inno_lab/list_questions.txt'
+	db = initialise_database_connection()	#Used for connecting with database.
 	nlp = spacy.load("en_core_web_sm")
 	with open(in_path) as f:
 		sentences = f.read().split('\n')
 	for i, sentence in enumerate(sentences):
 		if sentence is not '':
 			doc = nlp(sentence)
-			#if i != 2:
 			create_dictionary(doc)
