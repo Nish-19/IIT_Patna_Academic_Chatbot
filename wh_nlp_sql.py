@@ -2,20 +2,22 @@ import spacy
 from python_sql_connector import *
 roll_number = '1401cs01'
 
+cols = ['rollno', 'semno', 'year', 'subno', 'crd', 'grade', 'date_of_entry', 'sub_type']
+
 def create_sql(sql, flag):
 	sql_query = 'SELECT ' + sql['Select'] + ' FROM sem_grades '
 	sql_condition = 'WHERE '
 	sql_condition_dict = {}
 	for i, condition in enumerate(sql['Condition_val_type']):
-		if condition == 'XXddd':
+		if condition == 'XXddd' or condition == 'xxddd':
 			sql_condition_dict['subno'] = '\'' + sql['Condition_val'][i] + '\''
 		elif condition == 'ddddxxdd' or condition == 'ddddXXdd':
 			sql_condition_dict['rollno'] = '\'' + sql['Condition_val'][i] + '\''
 	for condition_pair in sql['additional']:
 		for key, value in condition_pair.items():
 			sql_condition_dict[key] = '\'' + value + '\''
-	if 'rollno' not in sql_condition_dict.keys() and flag == 0:
-		sql_condition_dict['rollno'] = '\'' + roll_number + '\''
+	# if 'rollno' not in sql_condition_dict.keys() and flag == 0:
+	# 	sql_condition_dict['rollno'] = '\'' + roll_number + '\''
 	for i, condition in enumerate(sql_condition_dict):
 		if i == 0:
 			sql_condition = sql_condition + condition + ' = ' + sql_condition_dict[condition]
@@ -39,7 +41,7 @@ def create_sql(sql, flag):
 
 
 
-def dfs(vertex,past,summary, sql):
+def dfs_what(vertex,past,summary, sql):
 	
 	if summary[vertex.text]['Dep']=='nsubj' and vertex.text!='what' and vertex.text!='who':
 		sql['Select']=vertex.text
@@ -53,7 +55,7 @@ def dfs(vertex,past,summary, sql):
 		sql['Condition_val'].append(vertex.text)
 		sql['Condition_val_type'].append(vertex.shape_)
 	for child in summary[vertex.text]['Children']:
-		dfs(child,vertex,summary, sql)
+		dfs_what(child,vertex,summary, sql)
 
 def list_sql_extract(summary, sql):
 	for token, value in summary.items():
@@ -66,8 +68,24 @@ def list_sql_extract(summary, sql):
 			if summary[value['Children'][0].text]['Dep'] != 'acl': 
 				sql['additional'].append({token : value['Children'][0].text})
 
+def which_sql_extract(summary, sentence, sql):
+	imax = 99999
+	elements = sentence.split()
+	for i, element in enumerate(elements):
+		if element in cols and i < imax:
+			sql['Select'] = element
+			imax = i
+		elif element in cols:
+			sql['additional'].append({element : elements[i+1]})
+		elif element == 'my':
+			sql['additional'].append({'rollno' : roll_number})
+	for token, value in summary.items():
+		if value['Shape'] == 'XXddd' or value['Shape'] == 'xxddd' or value['Shape'] == 'ddddxxdd' or value['Shape'] == 'ddddXXdd':
+			sql['Condition_val'].append(token)
+			sql['Condition_val_type'].append(value['Shape']) 
 
-def create_dictionary(doc):
+
+def create_dictionary(sentence, doc):
 	summary = dict()
 	root = ''
 	#sql = dict()
@@ -99,8 +117,13 @@ def create_dictionary(doc):
 	if root.text == 'List':
 		list_sql_extract(summary, sql)
 		flag = 1
+	elif 'which' in sentence or 'Which' in sentence:
+		which_sql_extract(summary, sentence, sql)
+		flag = 3
 	else:
-		dfs(root, root, summary, sql)
+		dfs_what(root, root, summary, sql)
+		if 'my' in sentence:
+			sql['additional'].append({'rollno' : roll_number})
 		flag = 0
 	print(sql)
 	print(summary)
@@ -108,7 +131,7 @@ def create_dictionary(doc):
 
 if __name__ == '__main__':
 	#in_path = 'E:/4thSem/inno_lab/wh_questions.txt'
-	in_path = 'E:/4thSem/inno_lab/list_questions.txt'
+	in_path = 'E:/4thSem/inno_lab/which_questions.txt'
 	db = initialise_database_connection()	#Used for connecting with database.
 	nlp = spacy.load("en_core_web_sm")
 	with open(in_path) as f:
@@ -116,4 +139,4 @@ if __name__ == '__main__':
 	for i, sentence in enumerate(sentences):
 		if sentence is not '':
 			doc = nlp(sentence)
-			create_dictionary(doc)
+			create_dictionary(sentence, doc)
