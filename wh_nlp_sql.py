@@ -37,8 +37,7 @@ def create_sql(sql, flag):
 	# 		sql['Select'] = sql['additional'][0].text + '_' + sql['Condition_val'].text + '_' + sql['Select'].text
 	# 		sql_query = 'SELECT ' + sql['Select'] + ' FROM table_name ' + 'WHERE Roll_number = ' + roll_number1 + ';'
 	print(sql_query)
-	generate_output(sql_query, db)
-
+	return sql_query
 
 
 def dfs_what(vertex,past,summary, sql):
@@ -127,7 +126,8 @@ def create_dictionary(sentence, doc):
 		flag = 0
 	print(sql)
 	print(summary)
-	create_sql(sql, flag)
+	sql_query = create_sql(sql, flag)
+	return sql_query
 
 if __name__ == '__main__':
 	#in_path = 'E:/4thSem/inno_lab/wh_questions.txt'
@@ -136,7 +136,8 @@ if __name__ == '__main__':
 	nlp = spacy.load("en_core_web_sm")
 	with open(in_path) as f:
 		sentences = f.read().split('\n')
-	for i, sentence in enumerate(sentences):
+	for sentence in sentences:
 		if sentence is not '':
 			doc = nlp(sentence)
-			create_dictionary(sentence, doc)
+			sql_query = create_dictionary(sentence, doc)
+			generate_output(sql_query, db)
