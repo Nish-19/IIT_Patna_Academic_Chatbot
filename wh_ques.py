@@ -3,15 +3,7 @@ roll_number = '1401cs01'
 
 def create_sql(sql, flag):
 	sql_condition_dict = {}
-	if flag==2:#hardcoded meanings of certain words as per field names in database, to be extended...
-		if sql['Select']=='topper':#i have assumed that we have the max score of a subject already calculated.
-			sql_condition_dict['grade']= '\'' + 'sql_query_to_get_max' + '\''
-		elif sql['Select']=='lowest':
-			sql_condition_dict['grade']= '\'' + 'sql_query_to_get_min' + '\''
-		elif sql['Select']=='instructor':
-			sql_condition_dict['status']= '\'' + sql['Select'] + '\''
-			
-		sql['Select']='name'
+	
 	sql_query = 'SELECT ' + sql['Select'] + ' FROM table_name '
 	sql_condition = 'WHERE '
 	for i, condition in enumerate(sql['Condition_val_type']):
@@ -21,6 +13,17 @@ def create_sql(sql, flag):
 			sql_condition_dict['rollno'] = '\'' + sql['Condition_val'][i] + '\''
 		elif flag==2:
 			sql_condition_dict['state'] = '\'' + sql['Condition_val'][i] + '\''
+
+	if flag==2:#hardcoded meanings of certain words as per field names in database, to be extended...
+		if sql['Select']=='topper':#i have assumed that we have the max score of a subject already calculated.
+			sql_condition_dict['grade']= '(SELECT MAX(grade) FROM table_name WHERE subno=' + sql_condition_dict['subno'] + ')'
+		elif sql['Select']=='lowest':
+			sql_condition_dict['grade']=  '(SELECT MIN(grade) FROM table_name WHERE subno=' + sql_condition_dict['subno'] + ')'
+		elif sql['Select']=='instructor':
+			sql_condition_dict['status']= '\'' + sql['Select'] + '\''
+			
+		sql['Select']='name'
+
 	for condition_pair in sql['additional']:
 		if flag==0:
 			for key, value in condition_pair.items():
