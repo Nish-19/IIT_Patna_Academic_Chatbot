@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+</head>
+<body>
+    <br><input type="text" id="freeSearch" placeholder="Search Box"/>
+    <div id="sample"></div>
+    <script>
+        var array = [];
+
+        var questions =["who is topper of batch 2014?","who is roll number 1801cs58?","what was the max grade for students of 2018 batch?","how many subjects were there for 4th semester cse?"];
+
+        var len = questions.length;
+
+        for(i=0; i<len; i++)
+        {
+            var temp = {};
+            temp["question"] = questions[i];
+            array.push(temp);
+        }
+    
+        //function to free search conversion formats
+        $('#freeSearch').keyup(function()
+        {
+            $('#sample').html("");
+
+            var val = $(this).val().trim();
+            if(val != "")
+            {
+                var filteredQues = [];
+                $(array).each(function(idx)
+                {
+                    if((array[idx].question.trim()).includes(val))
+                    {
+                        filteredQues.push(array[idx]);
+                    }
+                });
+
+                var html = "";
+                $(filteredQues).each(function()
+                {
+                    html = (this.question + '<br/>');
+                    $('#sample').append(html);                           
+                });
+                // console.log(html);
+            }                       
+        });                    
+    </script>
+</body>
+</html>
