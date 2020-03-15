@@ -37,11 +37,11 @@ pairs = [
     ],
     [
         r"(.*) created ?",
-        ["Nagesh created me using Python's NLTK library ","top secret ;)",]
+        ["Nischal created me using Python's NLTK library ","top secret ;)",]
     ],
     [
         r"(.*) (location|city) ?",
-        ['Chennai, Tamil Nadu',]
+        ['Patna, Bihar',]
     ],
     [
         r"how is weather in (.*)?",
