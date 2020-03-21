@@ -1,0 +1,34 @@
+which was my grade in HS231?
+which was the grade of 1401cs02 in cs201?
+which semno has cs201?
+which sub_type is cs302?
+which year was cs421 held?
+which year had cs421?
+which all rollno scored grade AA in cs201?
+which subno are there is year 2017 ?
+list all rollno of students enrolled in CE304.
+list all the subno of 6 semno.
+list all rollno with AA grade in CS201.
+list all subno of 1401cs01 in semno 6.
+what was my grade in HS231?
+what was the grade of 1401cs33 in cs201?
+what was the crd of cs222?
+what is the sub_type of cs302?
+who all opted for HS202 as elective?
+who all took HS202 as elective?
+who all chose HS202 as elective?
+who all opted for HS202 as elective?
+who was the topper of HS202?
+who scored lowest in HS202?
+who was the instructor of MA201?
+who all hail from rajasthan?
+How many subjects student has to study in semester four?
+How many subjects we have to study in semester four?
+How many subjects cs people have in their fourth semester?
+How many students are there in CS 2014?
+How many students there are in 2014 batch?
+How many students were enrolled in HS201?
+How many students hail from rajasthan?
+
+
+
