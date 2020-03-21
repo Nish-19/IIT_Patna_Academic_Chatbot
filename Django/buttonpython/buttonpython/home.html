@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>CHATBOT</title>
+    <h1>CHATBOT</h1>
+  </head>
+  <body>
+    <style>
+    div.printchatbox
+         {
+          border-width:thick 10px;border-style: solid;
+          background-color:#000000;
+          line-height: 2;color:#6E6A6B;font-size: 14pt;text-align:left;float: middle;
+          border: 3px solid #969293;width:70%;
+         }
+    </style>
+
+  <form action="/external/" method="post">
+        {% csrf_token %}
+        Type your question here:
+         <input type="text" name="param" required><br><br>
+         <br>
+          {{data1}}
+         <br>
+         <br>
+         <input type="submit" value="For Answer,Click ME">
+
+        </form>
+
+
+  </body>
+</html>
+<br>
+<br>
+<h3> CHAT HISTORY </h3>
+<div class="printchatbox">
