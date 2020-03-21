@@ -4,7 +4,6 @@ from subprocess import run,PIPE
 import sys
 
 def button(request):
-
     return render(request,'home.html')
 
 def output(request):
@@ -15,8 +14,12 @@ def output(request):
 
 def external(request):
     inp=request.POST.get('param')
+    file1 = open("C:\\Users\\hp\\Desktop\\Django\\buttonpython\\templates\\home.html","a+")
+    file1.write("\n"+"Question :"+inp+"<br>")
     out=run([sys.executable,"C:\\Users\\hp\\Desktop\\Python Scripts\\test.py",inp],shell=False,stdout=PIPE)
     o=out.stdout
-    print(o)
-
-    return render(request,'home.html',{'data1':o})
+    d = o.decode('ASCII')
+    file1.write("\n"+"Answer :"+d+"<br>")
+    file1.close()
+    print(d)
+    return render(request,'home.html',{'data1':d})
