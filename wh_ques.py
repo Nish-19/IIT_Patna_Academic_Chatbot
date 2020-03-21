@@ -3,9 +3,11 @@ roll_number = '1401cs01'
 
 def create_sql(sql, flag):
 	sql_condition_dict = {}
-	
+
 	if flag==2:
 		sql_query = 'SELECT name' + ' FROM table_name '
+	elif flag==3:
+		sql_query = 'SELECT COUNT(DISTINCT ' + sql['Select'] + ') FROM table_name '
 	else:
 		sql_query = 'SELECT ' + sql['Select'] + ' FROM table_name '
 	sql_condition = 'WHERE '
@@ -17,6 +19,17 @@ def create_sql(sql, flag):
 		elif flag==2:
 			sql_condition_dict['state'] = '\'' + sql['Condition_val'][i] + '\''
 
+	if flag==3:
+		for i,condition in enumerate(sql['additional']):
+			if condition.shape_=='xx' or condition.shape_=='xxx':
+				sql_condition_dict['branch'] = '\'' + sql['additional'][i].text + '\''
+			elif condition.shape_=='xxddd':
+				sql_condition_dict['subno'] = '\'' + sql['additional'][i].text + '\''
+			elif condition.shape_=='dddd':
+				sql_condition_dict['year'] = '\'' + sql['additional'][i].text + '\''
+			else:
+				sql_condition_dict['semester'] = '\'' + sql['additional'][i].text + '\''
+ 
 	if flag==2:#hardcoded meanings of certain words as per field names in database, to be extended...
 		if sql['Select']=='topper':#i have assumed that we have the max score of a subject already calculated.
 			sql_condition_dict['grade']= '(SELECT MAX(grade) FROM table_name WHERE subno=' + sql_condition_dict['subno'] + ')'
@@ -24,7 +37,8 @@ def create_sql(sql, flag):
 			sql_condition_dict['grade']= '(SELECT MIN(grade) FROM table_name WHERE subno=' + sql_condition_dict['subno'] + ')'
 		elif sql['Select']=='instructor':
 			sql_condition_dict['status']= '\'' + sql['Select'] + '\''
-			
+	
+
 	for condition_pair in sql['additional']:
 		if flag==0:
 			for key, value in condition_pair.items():
@@ -37,6 +51,8 @@ def create_sql(sql, flag):
 		# 		elif vertex == 'highest':
 		# 			temp=sql['Select']
 		# 			sql['Select']='MAX(' + temp + ')'
+
+
 
 	if 'rollno' not in sql_condition_dict.keys() and flag == 0:
 		sql_condition_dict['rollno'] = '\'' + roll_number + '\''
@@ -60,7 +76,14 @@ def create_sql(sql, flag):
 	# 		sql_query = 'SELECT ' + sql['Select'] + ' FROM table_name ' + 'WHERE Roll_number = ' + roll_number1 + ';'
 	print(sql_query)
 
+def dfsForHowMany(vertex,past,summary,sql):
 
+	if vertex.shape_=='dddd' or summary[vertex.text]['Dep']=='nummod' or (summary[vertex.text]['Dep']=='amod' and summary[past.text]['Dep']=='pobj'):
+		sql['additional'].append(vertex)
+	elif vertex.shape_=='xx' and (summary[vertex.text]['Dep']=='pobj' or summary[vertex.text]['Dep']=='compound'):
+		sql['additional'].append(vertex)
+	for child in summary[vertex.text]['Children']:
+		dfsForHowMany(child,vertex,summary,sql)
 
 def dfs(vertex,past,summary, sql):
 	
@@ -101,6 +124,8 @@ def list_sql_extract(summary, sql):
 			if summary[value['Children'][0].text]['Dep'] != 'acl': 
 				sql['additional'].append({token : value['Children'][0].text})
 
+howMany=0
+sql = dict()
 
 def create_dictionary(doc):
 	summary = dict()
@@ -128,9 +153,8 @@ def create_dictionary(doc):
 	# 						if child3.dep_ != 'det':
 	# 							sql['additional'].append(child3)
 
-	sql = dict()
+	
 	sql['additional'] = []
-	sql['Select'] = ''
 	sql['Condition_val'] = []
 	sql['Condition_val_type'] = []
 	whoFlag = 0
@@ -144,6 +168,9 @@ def create_dictionary(doc):
 	elif whoFlag==1:
 		dfsForWho(root,root,summary,sql)
 		flag = 2
+	elif howMany==1:
+		dfsForHowMany(root,root,summary,sql)
+		flag=3
 	else:
 		dfs(root, root, summary, sql)
 		flag = 0
@@ -157,8 +184,18 @@ if __name__ == '__main__':
 	nlp = spacy.load("en_core_web_sm")
 	with open(in_path) as f:
 		sentences = f.read().split('\n')
+
 	for i, sentence in enumerate(sentences):
 		if sentence is not '':
+			sentence=sentence.lower()
 			doc = nlp(sentence)
-			#if i != 2:
+			data = sentence.split()
+			cnt=0
+			for token in data:
+				if cnt==2 and howMany==0:
+					howMany=1
+					sql['Select']=token
+				if token=='how' or token=='many' :
+					cnt=cnt+1
 			create_dictionary(doc)
+		howMany=0
