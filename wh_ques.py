@@ -1,6 +1,8 @@
 import spacy
 roll_number = '1401cs01'
 
+name_of_states = ['rajasthan','punjab','assam','bihar','west bengal','tamil nadu','karnataka','kerala']
+
 def create_sql(sql, flag):
 	sql_condition_dict = {}
 
@@ -27,6 +29,8 @@ def create_sql(sql, flag):
 				sql_condition_dict['subno'] = '\'' + sql['additional'][i].text + '\''
 			elif condition.shape_=='dddd':
 				sql_condition_dict['year'] = '\'' + sql['additional'][i].text + '\''
+			elif condition.text in name_of_states:
+				sql_condition_dict['state'] = '\'' + sql['additional'][i].text + '\''
 			else:
 				sql_condition_dict['semester'] = '\'' + sql['additional'][i].text + '\''
  
@@ -43,16 +47,6 @@ def create_sql(sql, flag):
 		if flag==0:
 			for key, value in condition_pair.items():
 				sql_condition_dict[key] = '\'' + value + '\''
-		# elif flag==2:
-		# 	for vertex in sql['additional']:#optimise using pos , lemma
-		# 		if vertex == 'lowest':
-		# 			temp=sql['Select']
-		# 			sql['Select']='MIN(' + temp + ')'
-		# 		elif vertex == 'highest':
-		# 			temp=sql['Select']
-		# 			sql['Select']='MAX(' + temp + ')'
-
-
 
 	if 'rollno' not in sql_condition_dict.keys() and flag == 0:
 		sql_condition_dict['rollno'] = '\'' + roll_number + '\''
@@ -63,17 +57,6 @@ def create_sql(sql, flag):
 			sql_condition = sql_condition + ' AND ' + condition + ' = ' + sql_condition_dict[condition]
 	sql_condition = sql_condition + ';'
 	sql_query = sql_query + sql_condition
-
-	# if sql['Condition_val_type'] == 'XXddd':
-	# 	sql_query = 'SELECT ' + sql['Select'].text + ' FROM table_name ' + 'WHERE rollno = ' + roll_number + ' AND ' + 'subno = ' + sql['Condition_val'].text + ';'
-	# else:
-	# 	roll_number1 = roll_number
-	# 	if sql['Condition_val_type'] == 'ddddxxdd':
-	# 		roll_number1 = sql['Condition_val'].text
-	# 	sql_query = 'SELECT ' + sql['Select'].text + ' FROM table_name ' + 'WHERE Roll_number = ' + roll_number1 + ';'
-	# 	if len(sql['additional']) > 0:
-	# 		sql['Select'] = sql['additional'][0].text + '_' + sql['Condition_val'].text + '_' + sql['Select'].text
-	# 		sql_query = 'SELECT ' + sql['Select'] + ' FROM table_name ' + 'WHERE Roll_number = ' + roll_number1 + ';'
 	print(sql_query)
 
 def dfsForHowMany(vertex,past,summary,sql):
@@ -81,6 +64,10 @@ def dfsForHowMany(vertex,past,summary,sql):
 	if vertex.shape_=='dddd' or summary[vertex.text]['Dep']=='nummod' or (summary[vertex.text]['Dep']=='amod' and summary[past.text]['Dep']=='pobj'):
 		sql['additional'].append(vertex)
 	elif vertex.shape_=='xx' and (summary[vertex.text]['Dep']=='pobj' or summary[vertex.text]['Dep']=='compound'):
+		sql['additional'].append(vertex)
+	elif vertex.shape_=='xxddd':
+		sql['additional'].append(vertex)
+	elif summary[vertex.text]['Dep']=='pobj':
 		sql['additional'].append(vertex)
 	for child in summary[vertex.text]['Children']:
 		dfsForHowMany(child,vertex,summary,sql)
@@ -130,30 +117,13 @@ sql = dict()
 def create_dictionary(doc):
 	summary = dict()
 	root = ''
-	#sql = dict()
 	for token in doc:
 		lst = [child for child in token.children]
 		print(lst)
 		if token.dep_ == 'ROOT':
-			#root = token.text
 			root = token
 		summary[token.text] = {'Children' : lst, 'Dep' : token.dep_, 'Shape' : token.shape_, 'is_stop' : token.is_stop}
 
-	# for child in summary[root]['Children']:
-	# 	print(type(child))
-	# 	if summary[child.text]['Dep'] == 'nsubj':
-	# 		sql['Select'] = child
-	# 		for child1 in summary[str(child)]['Children']:
-	# 			if summary[str(child1)]['Dep'] == 'prep':
-	# 				for child2 in summary[str(child1)]['Children']:
-	# 					sql['Condition_val'] = child2
-	# 					sql['Condition_val_type'] = child2.shape_
-	# 					sql['additional'] = []
-	# 					for child3 in summary[str(child2)]['Children']:
-	# 						if child3.dep_ != 'det':
-	# 							sql['additional'].append(child3)
-
-	
 	sql['additional'] = []
 	sql['Condition_val'] = []
 	sql['Condition_val_type'] = []
