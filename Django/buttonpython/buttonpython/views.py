@@ -23,3 +23,26 @@ def external(request):
     file1.close()
     print(d)
     return render(request,'home.html',{'data1':d})
+
+def delete(request):
+   file1=open("C:\\Users\\hp\\Desktop\\Django\\buttonpython\\templates\\home.html","r+")
+   file2=open("b.txt","w+")
+   i=1
+   for line in file1:
+     if(i<=55):
+       file2.write(line)
+       i=i+1
+
+   file1.close()
+   file1=open("C:\\Users\\hp\\Desktop\\Django\\buttonpython\\templates\\home.html","w")
+   file1.write(" ");
+   file1.close()
+   file1=open("C:\\Users\\hp\\Desktop\\Django\\buttonpython\\templates\\home.html","a")
+   file2=open("b.txt","r+")
+
+   for line in file2:
+        file1.write(line)
+
+   file1.close()
+   return render(request,'home.html')
+
