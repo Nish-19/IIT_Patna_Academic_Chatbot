@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+
+   <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
@@ -36,6 +37,13 @@
          <input type="submit" value="For Answer,Click ME">
 
         </form>
+
+<br>
+<br>
+<form action="/delete/" method="post">
+  {%csrf_token%}
+  <input type="submit" value="Delete Chat">
+</form>
 
 
   </body>
