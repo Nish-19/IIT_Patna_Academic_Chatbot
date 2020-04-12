@@ -1,5 +1,4 @@
-
-   <!DOCTYPE html>
+      <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
@@ -28,6 +27,10 @@
 
   <form action="/external/" method="post">
         {% csrf_token %}
+        <input type="checkbox" id="DB" name="checks[]" value=1>
+        <label for="DB">DB?</label><br>
+        <input type="checkbox" id="NDB" name="checks[]" value=0>
+        <label for="NDB">NDB?</label><br>
         Type your question here:
          <input type="text" name="param" required><br><br>
          <br>
@@ -44,8 +47,6 @@
   {%csrf_token%}
   <input type="submit" value="Delete Chat">
 </form>
-
-
   </body>
 </html>
 <br>
