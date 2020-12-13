@@ -1,6 +1,6 @@
 from wh_nlp_sql import *
 from nltk_chat import *
-
+from cgb import *
 if __name__ == '__main__':
 	print('Hello! My name is academic chatbot. I am here at your service')
 	utter = ''
@@ -13,6 +13,12 @@ if __name__ == '__main__':
 		if utter == 'D' or utter == 'd':
 			print('Please enter the database related question')
 			utter_ip = input('> ')
+			if utter_ip =="predict cpi":
+				cat=input("Enter the category:")
+				sex=input("Enter Gender:")
+				brh=input("Enter branch:")
+				print("Predicted CPI is:",cgb(cat,sex,brh))
+
 			doc = nlp(utter_ip)
 			sql_query = create_dictionary(utter_ip, doc)
 			generate_output(sql_query, db)
