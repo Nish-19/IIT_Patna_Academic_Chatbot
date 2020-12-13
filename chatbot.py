@@ -19,9 +19,9 @@ if __name__ == '__main__':
 				brh=input("Enter branch:")
 				print("Predicted CPI is:",cgb(cat,sex,brh))
 			else:
-                doc=nlp(utter_ip)
-				sql_query=create_dictionary(utter_ip, doc)
-				generate_output(sql_query, db)
+				doc=nlp(utter_ip)
+				sql_query=create_dictionary(utter_ip,doc)
+				generate_output(sql_query,db)
 		# elif utter == 'quit':
 		# 	print("It was great talking to you! Thank You!")
 		# 	break
