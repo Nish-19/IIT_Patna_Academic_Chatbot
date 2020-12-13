@@ -13,15 +13,15 @@ if __name__ == '__main__':
 		if utter == 'D' or utter == 'd':
 			print('Please enter the database related question')
 			utter_ip = input('> ')
-			if utter_ip =="predict cpi":
+			if utter_ip =="predict_cpi":
 				cat=input("Enter the category:")
 				sex=input("Enter Gender:")
 				brh=input("Enter branch:")
 				print("Predicted CPI is:",cgb(cat,sex,brh))
-
-			doc = nlp(utter_ip)
-			sql_query = create_dictionary(utter_ip, doc)
-			generate_output(sql_query, db)
+			else:
+                doc=nlp(utter_ip)
+				sql_query=create_dictionary(utter_ip, doc)
+				generate_output(sql_query, db)
 		# elif utter == 'quit':
 		# 	print("It was great talking to you! Thank You!")
 		# 	break
