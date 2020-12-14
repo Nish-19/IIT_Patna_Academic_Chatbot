@@ -1,0 +1,1 @@
+Please download the glove vector zip file from https://nlp.stanford.edu/projects/glove/ and place the 50-dimensional vectors in this directory.
