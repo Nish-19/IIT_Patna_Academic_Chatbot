@@ -95,7 +95,7 @@ def chatty(utter = ''):
     else:
         result = chat.respond(utter)
         if result == None:
-            print('Sorry query not found. These are the most similar sounding queries')
+            print('Sorry general query not found. These are the most similar sounding queries')
             find_similarity(utter)
         else:
             print(chat.respond(utter))

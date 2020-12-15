@@ -8,8 +8,13 @@ import os
 
 def get_sentiment_report(sentiment_overall):
 	count = Counter(sentiment_overall)
-	print('The overall sentimenet is:', count)
-
+	total = 0
+	for i in count.values():
+		total+=i
+	print('The sentimenet distribution of the user is:')
+	print('Positive Sentiment:', (count[1]/total))
+	print('Negative Sentiment:', (count[-1]/total))
+	print('Neutral Sentiment:', (count[0]/total))
 
 if __name__ == '__main__':
 	print('Hello! My name is academic chatbot. I am here at your service')
@@ -55,9 +60,12 @@ if __name__ == '__main__':
 		if choice == 0:
 			chatty(utter)
 		elif choice == 1:
-			doc = nlp(utter)
-			sql_query = create_dictionary(utter, doc)
-			generate_output(utter, sql_query, db)
+			try:
+				doc = nlp(utter)
+				sql_query = create_dictionary(utter, doc)
+				generate_output(utter, sql_query, db)
+			except Exception:
+				print('Sorry that didn\'t work.')
 		utter = input('> ')
 		if utter == 'quit':
 			break

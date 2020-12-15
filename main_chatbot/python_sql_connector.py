@@ -24,5 +24,5 @@ def generate_output(utter, sql_query, db):
 		unique_list = list(unique_set)
 		print(unique_list)
 	except Exception:
-		print('Sorry query not found. These are the most similar sounding queries')
+		print('Sorry database query not found. These are the most similar sounding queries')
 		find_similarity(utter)
