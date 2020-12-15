@@ -74,6 +74,7 @@ class ExampleFrame(wx.Frame):
     def OnButton(self, e):
         utter = self.editname.GetValue()
         if utter == "quit":
+        	get_sentiment_report(self.sentiment_polarity)
         	self.feedback_file.close()
         	sys.exit(0)
         else:

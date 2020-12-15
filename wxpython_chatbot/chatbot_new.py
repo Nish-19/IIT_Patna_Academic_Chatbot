@@ -11,10 +11,12 @@ def get_sentiment_report(sentiment_overall):
 	total = 0
 	for i in count.values():
 		total+=i
-	print('The sentimenet distribution of the user is:')
-	print('Positive Sentiment:', (count[1]/total))
-	print('Negative Sentiment:', (count[-1]/total))
-	print('Neutral Sentiment:', (count[0]/total))
+	ip_file = open("sentimenet_report.txt", 'w')
+	print('The sentimenet distribution of the user is:', file = ip_file)
+	print('Positive Sentiment:', (count[1]/total), file = ip_file)
+	print('Negative Sentiment:', (count[-1]/total), file = ip_file)
+	print('Neutral Sentiment:', (count[0]/total), file = ip_file)
+	ip_file.close()
 
 def initialize():
 	os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
