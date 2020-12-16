@@ -9,3 +9,7 @@ Inputs- spi_1,spi_2
 Outputs--CPI
 
 Have a look at the cgb.py file(I have mentioned the if else conditions there)
+
+3)ma101vsma102.pkl
+Input-MA101 grade(in float).
+Output-Ma102 grade(in float).
