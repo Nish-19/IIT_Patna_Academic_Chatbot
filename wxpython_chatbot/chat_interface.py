@@ -1,6 +1,6 @@
 """
-Name: Nischal A
-Roll: 1801CS33
+Name: Nischal; Haindavi; Vaibhav; Garima; Souhardya
+Roll: 1801CS33; 1801CS35; 1801CS58; 1801CS20; 1801CS51
 Innovation Lab Project IIT-Patna
 Interface for running the main chatbot code
 """
