@@ -1,0 +1,6 @@
+Token.text,Token.Pos,Token.Dep,Head Text,Head Pos,Children
+Which,DET,det,year,NOUN,[]
+year,NOUN,npadvmod,had,AUX,[Which]
+had,AUX,ROOT,had,AUX,[year, CS421, ?]
+CS421,NOUN,dobj,had,AUX,[]
+?,PUNCT,punct,had,AUX,[]

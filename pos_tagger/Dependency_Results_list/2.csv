@@ -1,0 +1,10 @@
+Token.text,Token.Pos,Token.Dep,Head Text,Head Pos,Children
+List,NOUN,ROOT,List,NOUN,[all, rollno, .]
+all,DET,dobj,List,NOUN,[]
+rollno,VERB,dobj,List,NOUN,[with]
+with,ADP,prep,rollno,VERB,[grade]
+AA,PROPN,compound,grade,NOUN,[]
+grade,NOUN,pobj,with,ADP,[AA, in]
+in,ADP,prep,grade,NOUN,[CS201]
+CS201,PROPN,pobj,in,ADP,[]
+.,PUNCT,punct,List,NOUN,[]

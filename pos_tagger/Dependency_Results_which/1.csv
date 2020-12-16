@@ -1,0 +1,6 @@
+Token.text,Token.Pos,Token.Dep,Head Text,Head Pos,Children
+Which,DET,nsubj,has,AUX,[]
+semno,NOUN,advmod,has,AUX,[]
+has,AUX,ROOT,has,AUX,[Which, semno, CS201, ?]
+CS201,NOUN,dobj,has,AUX,[]
+?,PUNCT,punct,has,AUX,[]

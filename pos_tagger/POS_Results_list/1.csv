@@ -1,0 +1,9 @@
+Text,Lemma,POS,Tag,Dep,Shape,is alpha,is stop
+List,list,VERB,VB,ROOT,Xxxx,True,False
+all,all,DET,PDT,predet,xxx,True,True
+the,the,DET,DT,det,xxx,True,True
+subno,subno,NOUN,NN,dobj,xxxx,True,False
+of,of,ADP,IN,prep,xx,True,True
+6,6,NUM,CD,nummod,d,False,False
+semno,semno,NOUN,NN,pobj,xxxx,True,False
+.,.,PUNCT,.,punct,.,False,False

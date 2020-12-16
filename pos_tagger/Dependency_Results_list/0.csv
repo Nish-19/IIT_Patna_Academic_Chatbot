@@ -1,0 +1,10 @@
+Token.text,Token.Pos,Token.Dep,Head Text,Head Pos,Children
+List,NOUN,ROOT,List,NOUN,[rollno, .]
+all,DET,det,rollno,VERB,[]
+rollno,VERB,dobj,List,NOUN,[all, of]
+of,ADP,prep,rollno,VERB,[students]
+students,NOUN,pobj,of,ADP,[enrolled]
+enrolled,VERB,acl,students,NOUN,[in]
+in,ADP,prep,enrolled,VERB,[CE304]
+CE304,PROPN,pobj,in,ADP,[]
+.,PUNCT,punct,List,NOUN,[]

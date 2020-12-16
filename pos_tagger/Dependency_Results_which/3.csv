@@ -1,0 +1,7 @@
+Token.text,Token.Pos,Token.Dep,Head Text,Head Pos,Children
+Which,DET,det,year,NOUN,[]
+year,NOUN,npadvmod,held,VERB,[Which]
+was,AUX,auxpass,held,VERB,[]
+CS421,PROPN,nsubj,held,VERB,[]
+held,VERB,ROOT,held,VERB,[year, was, CS421, ?]
+?,PUNCT,punct,held,VERB,[]

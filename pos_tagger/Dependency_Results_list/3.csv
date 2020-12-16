@@ -1,0 +1,10 @@
+Token.text,Token.Pos,Token.Dep,Head Text,Head Pos,Children
+List,VERB,ROOT,List,VERB,[subno, in, .]
+all,DET,det,subno,ADV,[]
+subno,ADV,dobj,List,VERB,[all, of]
+of,ADP,prep,subno,ADV,[1401CS01]
+1401CS01,NUM,pobj,of,ADP,[]
+in,ADP,prep,List,VERB,[semno]
+semno,ADJ,pobj,in,ADP,[6]
+6,NUM,nummod,semno,ADJ,[]
+.,PUNCT,punct,List,VERB,[]

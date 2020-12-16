@@ -1,0 +1,6 @@
+Token.text,Token.Pos,Token.Dep,Head Text,Head Pos,Children
+Which,DET,attr,is,AUX,[]
+sub_type,PROPN,nsubj,is,AUX,[]
+is,AUX,ROOT,is,AUX,[Which, sub_type, CS302, ?]
+CS302,NOUN,attr,is,AUX,[]
+?,PUNCT,punct,is,AUX,[]

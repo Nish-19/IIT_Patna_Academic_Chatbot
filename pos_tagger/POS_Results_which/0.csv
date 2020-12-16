@@ -1,0 +1,8 @@
+Text,Lemma,POS,Tag,Dep,Shape,is alpha,is stop
+Which,which,DET,WDT,nsubj,Xxxxx,True,True
+was,be,AUX,VBD,ROOT,xxx,True,True
+my,-PRON-,DET,PRP$,poss,xx,True,True
+grade,grade,NOUN,NN,attr,xxxx,True,False
+in,in,ADP,IN,prep,xx,True,True
+HS231,HS231,PROPN,NNP,pobj,XXddd,False,False
+?,?,PUNCT,.,punct,?,False,False

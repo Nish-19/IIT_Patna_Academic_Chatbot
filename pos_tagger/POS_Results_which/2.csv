@@ -1,0 +1,6 @@
+Text,Lemma,POS,Tag,Dep,Shape,is alpha,is stop
+Which,which,DET,WDT,attr,Xxxxx,True,True
+sub_type,sub_type,PROPN,NNP,nsubj,xxx_xxxx,False,False
+is,be,AUX,VBZ,ROOT,xx,True,True
+CS302,cs302,NOUN,NN,attr,XXddd,False,False
+?,?,PUNCT,.,punct,?,False,False

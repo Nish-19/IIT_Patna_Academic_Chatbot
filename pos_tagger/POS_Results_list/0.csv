@@ -1,0 +1,10 @@
+Text,Lemma,POS,Tag,Dep,Shape,is alpha,is stop
+List,list,NOUN,NN,ROOT,Xxxx,True,False
+all,all,DET,DT,det,xxx,True,True
+rollno,rollno,VERB,VBP,dobj,xxxx,True,False
+of,of,ADP,IN,prep,xx,True,True
+students,student,NOUN,NNS,pobj,xxxx,True,False
+enrolled,enrol,VERB,VBN,acl,xxxx,True,False
+in,in,ADP,IN,prep,xx,True,True
+CE304,CE304,PROPN,NNP,pobj,XXddd,False,False
+.,.,PUNCT,.,punct,.,False,False

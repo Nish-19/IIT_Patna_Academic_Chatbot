@@ -1,0 +1,9 @@
+Text,Lemma,POS,Tag,Dep,Shape,is alpha,is stop
+Which,which,DET,WDT,nsubj,Xxxxx,True,True
+rollno,rollno,NOUN,NN,ROOT,xxxx,True,False
+scored,score,VERB,VBD,amod,xxxx,True,False
+grade,grade,NOUN,NN,compound,xxxx,True,False
+AA,AA,PROPN,NNP,dobj,XX,True,False
+in,in,ADP,IN,prep,xx,True,True
+CS201,CS201,PROPN,NNP,pobj,XXddd,False,False
+?,?,PUNCT,.,punct,?,False,False

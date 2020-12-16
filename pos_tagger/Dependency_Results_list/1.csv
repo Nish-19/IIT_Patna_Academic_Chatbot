@@ -1,0 +1,9 @@
+Token.text,Token.Pos,Token.Dep,Head Text,Head Pos,Children
+List,VERB,ROOT,List,VERB,[subno, .]
+all,DET,predet,subno,NOUN,[]
+the,DET,det,subno,NOUN,[]
+subno,NOUN,dobj,List,VERB,[all, the, of]
+of,ADP,prep,subno,NOUN,[semno]
+6,NUM,nummod,semno,NOUN,[]
+semno,NOUN,pobj,of,ADP,[6]
+.,PUNCT,punct,List,VERB,[]

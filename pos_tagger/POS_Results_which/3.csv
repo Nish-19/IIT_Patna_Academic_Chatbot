@@ -1,0 +1,7 @@
+Text,Lemma,POS,Tag,Dep,Shape,is alpha,is stop
+Which,which,DET,WDT,det,Xxxxx,True,True
+year,year,NOUN,NN,npadvmod,xxxx,True,False
+was,be,AUX,VBD,auxpass,xxx,True,True
+CS421,CS421,PROPN,NNP,nsubj,XXddd,False,False
+held,hold,VERB,VBN,ROOT,xxxx,True,False
+?,?,PUNCT,.,punct,?,False,False

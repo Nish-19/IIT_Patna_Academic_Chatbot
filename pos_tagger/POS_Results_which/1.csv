@@ -1,0 +1,6 @@
+Text,Lemma,POS,Tag,Dep,Shape,is alpha,is stop
+Which,which,DET,WDT,nsubj,Xxxxx,True,True
+semno,semno,NOUN,NN,advmod,xxxx,True,False
+has,have,AUX,VBZ,ROOT,xxx,True,True
+CS201,cs201,NOUN,NN,dobj,XXddd,False,False
+?,?,PUNCT,.,punct,?,False,False
