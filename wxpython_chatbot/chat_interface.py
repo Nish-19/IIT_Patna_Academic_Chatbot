@@ -20,7 +20,7 @@ class ExampleFrame(wx.Frame):
         self.heading.SetForegroundColour(wx.RED)     
         self.quote = wx.StaticText(self.panel, label="Chatbot:")
         #self.result = wx.StaticText(self.panel, label="")
-        self.result = wx.TextCtrl(self.panel, style = wx.TE_MULTILINE | wx.TE_READONLY | wx.TE_RICH, size=(540, -1))
+        self.result = wx.TextCtrl(self.panel, style = wx.TE_MULTILINE | wx.TE_READONLY | wx.TE_RICH, size=(540, 200))
         self.result.SetForegroundColour(wx.BLUE)
         self.button = wx.Button(self.panel, label="Enter")
         self.lblname = wx.StaticText(self.panel, label="Your Question:")
