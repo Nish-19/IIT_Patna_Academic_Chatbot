@@ -37,7 +37,7 @@ pairs = [
     ],
     [
         r"(.*) created ?",
-        ["Nischal created me using Python's NLTK library ","top secret ;)",]
+        ["Group of geeks from IITP created me using Python's NLTK library ","top secret ;)",]
     ],
     [
         r"(.*) (location|city) ?",
