@@ -84,6 +84,22 @@ pairs = [
         r"thank (.*)",
         ["You are welcome"]
     ],
+    [
+        r"it was nice speaking to you",
+        ["Thank You! My pleasure"]
+    ],
+    [
+        r"(this|that|it) is (.*) (bad|sad|disappointing)",
+        ["I am sorry to learn that"]
+    ],
+    [
+        r"(this|that|it) is (.*) (good|awesome|cool|nice)",
+        ["That's great!"]
+    ],
+    [
+        r"okay",
+        ["Nice, you have any more questions?"]
+    ],
 ]
 
 
