@@ -56,11 +56,17 @@ regressor = LinearRegression()
 X_train=X_train.reshape(-1,1)
 y_train=y_train.reshape(-1,1) 
 regressor.fit(X_train, y_train)
-
+from sklearn.externals import joblib 
+  
+# Save the model as a pickle in a file 
+joblib.dump(regressor, 'ma101_ma102.pkl') 
 #Predicting the Test set results
 X_test=X_test.reshape(-1,1)
 y_pred = regressor.predict(X_test)
-
+knn_from_joblib = joblib.load('ma101_ma102.pkl')  
+  
+# Use the loaded model to make predictions 
+knn_from_joblib.predict(X_test)
 # Visualising the Training set results
 plt.scatter(X_train, y_train, color='red')
 plt.plot(X_train, regressor.predict(X_train), color='blue')
