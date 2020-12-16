@@ -1,0 +1,11 @@
+1)cgb.pkl
+
+Inputs- Caste,Gender,Branch.
+Outputs--CPI
+
+2)spi1_spi2_cpi.pkl
+
+Inputs- spi_1,spi_2
+Outputs--CPI
+
+Have a look at the cgb.py file(I have mentioned the if else conditions there)
