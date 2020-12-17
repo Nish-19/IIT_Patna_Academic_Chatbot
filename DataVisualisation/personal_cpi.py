@@ -400,7 +400,7 @@ nopluscat('WB','SC')
 # In[138]:
 
 
-com=pd.read_csv("RefinedCombinedStudentandGradesData.csv")
+com=pd.read_csv("modified_combined_stud_and_grades_data.csv")
 com = com.drop_duplicates(subset='rollno', keep="first")
 
 #Pass the spinumber or cpi as the parameter.If nothing is given,cpi will be taken bydefault.
