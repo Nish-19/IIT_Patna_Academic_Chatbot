@@ -29,7 +29,7 @@ class ExampleFrame(wx.Frame):
         self.rbox = wx.RadioBox(self.panel, label = 'Type', choices = ['Non-DB', 'DB'], majorDimension=1, style = wx.RA_SPECIFY_ROWS) 
         self.rbox.SetSelection(0)
         self.rbox.Bind(wx.EVT_RADIOBOX,self.onRadioBox)
-        # trying to insert image
+        # insert a picture of 100*100 size of your choice
         bmp = wx.Bitmap('iitp_resize.png') 
         self.imgbutton = wx.Button(self.panel, label="", size = (100,100))
         self.imgbutton.SetBitmap(bmp) 
