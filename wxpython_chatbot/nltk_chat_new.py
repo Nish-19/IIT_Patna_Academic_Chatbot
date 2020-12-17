@@ -92,7 +92,7 @@ pairs = [
         ["I am sorry to learn that"]
     ],
     [
-        r"(this|that|it) is (.*) (good|awesome|cool|nice)",
+        r"(this|that|it) is (.*) (great|good|awesome|cool|nice)",
         ["That's great!"]
     ],
     [

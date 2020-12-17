@@ -1,11 +1,12 @@
 """
-Name: Nischal; Haindavi; Vaibhav; Garima; Souhardya
-Roll: 1801CS33; 1801CS35; 1801CS58; 1801CS20; 1801CS51
+Name: Nischal A
+Roll: 1801CS33
 Innovation Lab Project IIT-Patna
 Interface for running the main chatbot code
 """
 
 
+#from chatbot_new import *
 from chatbot_new import *
 from sentence_similarity_new import *
 import wx, sys
@@ -25,7 +26,7 @@ class ExampleFrame(wx.Frame):
         self.button = wx.Button(self.panel, label="Enter")
         self.lblname = wx.StaticText(self.panel, label="Your Question:")
         self.editname = wx.TextCtrl(self.panel, size=(540, -1))
-        self.rbox = wx.RadioBox(self.panel, label = 'Type', choices = ['DB', 'Non-DB'], majorDimension=1, style = wx.RA_SPECIFY_ROWS) 
+        self.rbox = wx.RadioBox(self.panel, label = 'Type', choices = ['Non-DB', 'DB'], majorDimension=1, style = wx.RA_SPECIFY_ROWS) 
         self.rbox.SetSelection(0)
         self.rbox.Bind(wx.EVT_RADIOBOX,self.onRadioBox)
         # trying to insert image
@@ -66,39 +67,72 @@ class ExampleFrame(wx.Frame):
         string = "Hello! My name is academic chatbot. I am here at your service\nPlease wait! I am configuring myself"
         self.result.SetLabel(string)
         self.sentiment_polarity = []
-        self.feedback_file = open('feedback.csv', 'a+')
         self.embedding_matrix, self.tokenizer, self.MAX_LENGTH, self.db, self.nlp = initialize()
         string = "Thanks for your patience!\nI am ready! Let\'s Start!"
         self.result.SetLabel(string)
 
+        # Feedback initialization
+        self.type_input = 0
+        self.class_feedback_file = open('class_feedback.csv', 'a+')
+        self.db_feedback_file = open('db_feedback_file.csv', 'a+')
+        self.ndb_feedback_file = open('ndb_feedback_file.csv', 'a+')
+        self.prev_string = ''
+        self.prev_selection = -1
+
     def OnButton(self, e):
         utter = self.editname.GetValue()
         if utter == "quit":
-        	get_sentiment_report(self.sentiment_polarity)
-        	self.feedback_file.close()
-        	sys.exit(0)
+            get_sentiment_report(self.sentiment_polarity)
+            self.class_feedback_file.close()
+            self.db_feedback_file.close()
+            self.ndb_feedback_file.close()
+            sys.exit(0)
         else:
-	        choice, output = get_output(utter, self.embedding_matrix, self.tokenizer, self.MAX_LENGTH, self.db, self.nlp)
-	        output = str(output)
-	        print(output)
-	        if choice == 0:
-	        	self.rbox.SetSelection(1)
-	        elif choice == 1:
-	        	self.rbox.SetSelection(0)
-	        if output == "None":
-	            string = "Not working as expected\nFeedback recorded!\nPlease check the most similar sounding queries\n"
-	            similar_queries = find_similarity(utter)
-	            print(similar_queries)
-	            for query in similar_queries:
-	            	print(query)
-	            	string+=query + "\n"
-	            self.result.SetValue(string)         
-	            string = utter + "," + str(choice) + "\n"
-	            self.feedback_file.write(string)
-	            # Opening the feedback module
-	        else:
-	        	self.result.SetValue(output)
-	        self.sentiment_polarity.append(get_polarity(utter))
+            if self.type_input == 0:
+    	        choice, output = get_output(utter, self.embedding_matrix, self.tokenizer, self.MAX_LENGTH, self.db, self.nlp)
+    	        output = str(output)
+    	        print(output)
+    	        if choice == 0:
+    	        	self.rbox.SetSelection(0)
+    	        elif choice == 1:
+    	        	self.rbox.SetSelection(1)
+    	        if output == "None":
+                    string = "Not working as expected\nChose appropriate type button and press next to record the feedback!\n"
+                    # similar_queries = find_similarity(utter)
+                    # print(similar_queries)
+                    # for query in similar_queries:
+                    # 	print(query)
+                    # 	string+=query + "\n"
+                    self.result.SetValue(string)         
+                    # string = utter + "," + str(choice) + "\n"
+                    # self.feedback_file.write(string)
+                    # Opening the feedback module
+                    self.type_input = 1
+                    self.prev_string = utter
+                    self.prev_selection = self.rbox.GetSelection()
+    	        else:
+    	        	self.result.SetValue(output)
+    	        self.sentiment_polarity.append(get_polarity(utter))
+            elif self.type_input == 1:
+                # Running the feedback module here
+                new_choice = self.rbox.GetSelection()
+                if new_choice != self.prev_selection:
+                    string = self.prev_string + "," + str(new_choice) + "\n"
+                    self.class_feedback_file.write(string)
+                elif new_choice == self.prev_selection and new_choice == 1:
+                    self.db_feedback_file.write(self.prev_string + "\n")
+                elif new_choice == self.prev_selection and new_choice == 0:
+                    self.ndb_feedback_file.write(self.prev_string + "\n")
+                string = "Thank You for the feedback! Please also look at similar sounding queries\n"
+                similar_queries = find_similarity(self.prev_string)
+                print(similar_queries)
+                for query in similar_queries:
+                  print(query)
+                  string+=query + "\n"
+                string+="You may now enter your next question\n"
+                self.result.SetValue(string)
+                self.type_input = 0 
+
 
     def onRadioBox(self, e):
     	pass
