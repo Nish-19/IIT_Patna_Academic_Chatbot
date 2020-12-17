@@ -56,6 +56,13 @@ regressor = LinearRegression()
 X_train=X_train.reshape(-1,1)
 y_train=y_train.reshape(-1,1) 
 regressor.fit(X_train, y_train)
+
+X_test=X_test.reshape(-1,1)
+y_test=y_test.reshape(-1,1) 
+
+print(regressor.score(X_train, y_train))
+print(regressor.score(X_test, y_test))
+
 from sklearn.externals import joblib 
   
 # Save the model as a pickle in a file 
