@@ -341,21 +341,24 @@ state('WB')
 # In[153]:
 
 
-def local2(temp,lab):
+def local2(temp,lab,cp=0):
     temp=temp[lab].value_counts().reset_index()
     #plt.pie(x=temp['State'],labels=temp['State'],)
     #Giving State.So,plotting Category composition of that particular state
     plt.figure(figsize =(20, 20)) 
     ax=plt.subplot(111)
     #plt.title('Whole Batch '+cat+ ' Composition')
-    plt.pie(temp[lab],labels = temp['index'],startangle=90) 
-    chartBox = ax.get_position()
-    ax.set_position([chartBox.x0, chartBox.y0, chartBox.width*0.6, chartBox.height])
-    ax.legend(loc='upper center', bbox_to_anchor=(1.45, 0.8), shadow=True, ncol=1)
+    if cp == 1:
+        plt.pie(temp[lab],labels = None,startangle=90) 
+    else:
+        plt.pie(temp[lab],labels = temp['index'],startangle=90) 
+    # chartBox = ax.get_position()
+    # ax.set_position([chartBox.x0, chartBox.y0, chartBox.width*0.6, chartBox.height])
+    ax.legend(loc='upper center',labels = temp['index'], bbox_to_anchor=(1.45, 0.8), shadow=True, ncol=1)
     plt.show()
 
 
-#Yet to change_Number of Caste-State Distribution SC student from Bihar  Modified..
+#Number of Caste-State Distribution SC student from Bihar  Modified..
 def nopluscat(stt=None,cat=None) :
     tot=0
     #Not giving input of state or category.SO plotting statewise students count 
@@ -405,7 +408,7 @@ com = com.drop_duplicates(subset='rollno', keep="first")
 def cpi_gaussian_distribution(par='cpi'):
     sns.distplot(com[par])
 #com.head()
-#cpi_gaussian_distribution('sem8_spi')
+cpi_gaussian_distribution('sem8_spi')
 com
 
 
@@ -443,13 +446,27 @@ def spi1_spi2_cpi():
 spi1_spi2_cpi()
 
 
-# In[ ]:
+
+
+def boardcnt(bord =None):
+    if bord != None:
+        ds=com[com['Board']==bord]
+        print("Number of students from "+bord +" is " + len(ds['rollno']))
+    ax=plt.subplot(111)
+    sns.countplot(com['Board'])
+    temp=com['Board'].value_counts().reset_index()
+    print(temp)
+    ax.legend(loc='upper center',labels = temp['index'], bbox_to_anchor=(1.45, 0.8), shadow=True, ncol=1)
+    plt.title('Whole Batch Board Composition')
+    plt.show()
+    local2(com,'Board',1)
+
+boardcnt()
 
 
 
 
 
-# In[ ]:
 
 
 
