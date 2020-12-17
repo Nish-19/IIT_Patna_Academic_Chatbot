@@ -72,7 +72,32 @@ def AllSemsSpi( rollno ):
     plt.ylabel('SPI')
     plt.title('Result ({})'.format(rollno))
     plt.show()
+    
+#5. A function to visually compare performance of two courses of students enrolled in both of them. 
+def ComparePerformance(subcode1, subcode2):
+    gradeDict = {}
+    gradeDictFin = {}
+    points = {"AA": 10, "AB": 9, "BB": 8, "BC" : 7, "CC" : 6, "CD" : 5, "DD": 4, "F": 0}
+    for i in df.index:
+        if subcode1 == df['subno'][i]: 
+            gradeDict[df['rollno'][i]] = []
+            gradeDict[df['rollno'][i]].append(points[df['grade'][i]])
 
+    for i in df.index:
+        if subcode2 == df['subno'][i]:
+            if df['rollno'][i] in gradeDict.keys():
+                gradeDictFin[df['rollno'][i]] = gradeDict[df['rollno'][i]]
+                gradeDictFin[df['rollno'][i]].append(points[df['grade'][i]])
+
+    gradeX = []
+    gradeY = []
+    for k in gradeDictFin.keys():
+        gradeX.append(gradeDictFin[k][0])
+        gradeY.append(gradeDictFin[k][1])
+    
+    plt.scatter(gradeX, gradeY)
+    plt.show()
+    
 # Dataframes to be used in functions
 df = pd.read_csv('ori_grades_data.csv')
 
@@ -117,4 +142,7 @@ semno = 4
 rollno = "1401CS20"
 #AllSemsSpi(rollno)
 
+subcode1 = "MA101"
+subcode2 = "MA102"
+#ComparePerformance( subcode1, subcode2)
 
