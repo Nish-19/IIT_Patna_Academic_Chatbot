@@ -50,9 +50,10 @@ def plots(label=None,data=None,explode=None,colors=None,title=None):
                                       colors = colors, 
                                       startangle = 90, 
                                       wedgeprops = wp, 
-                                      textprops = dict(color ="black"),
-                                     ) 
-
+                                      textprops = dict(color ="black", fontsize= 25), 
+                                     )
+    for att in autotexts:
+        att.set_fontsize(40)
     # Adding legend 
     ax.legend(wedges, label, 
               title =title, 
@@ -407,9 +408,10 @@ com = com.drop_duplicates(subset='rollno', keep="first")
 #Plotting spi distribution
 def cpi_gaussian_distribution(par='cpi'):
     sns.distplot(com[par])
+    plt.show()
 #com.head()
 cpi_gaussian_distribution('sem8_spi')
-com
+cpi_gaussian_distribution()
 
 
 # In[141]:
@@ -462,6 +464,10 @@ def boardcnt(bord =None):
     local2(com,'Board',1)
 
 boardcnt()
+
+
+
+
 
 
 
