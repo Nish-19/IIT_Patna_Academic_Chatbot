@@ -14,11 +14,15 @@ pairs = [
         ["I'm doing good\nHow about You ?",]
     ],
     [
+        r"(.*)tell me (.*) (proverbs|proverb)(.*)",
+        ["Every Cloud has a silver lining!","Where there is a will, there is a way!",]
+    ],
+    [
         r"sorry (.*)",
         ["Its alright","Its OK, never mind",]
     ],
     [
-        r"i'm doing good",
+        r"(i'm|I am) (.*)(good|fine|happy)",
         ["Nice to hear that","Alright :)",]
     ],
     [
@@ -88,11 +92,11 @@ pairs = [
         ["Thank You! My pleasure"]
     ],
     [
-        r"(this|that|it) is (.*) (bad|sad|disappointing)",
+        r"(this|that|it) is (.*)(bad|sad|disappointing)",
         ["I am sorry to learn that"]
     ],
     [
-        r"(this|that|it) is (.*) (great|good|awesome|cool|nice)",
+        r"(this|that|it) is (.*)(great|good|awesome|cool|nice)",
         ["That's great!"]
     ],
     [
