@@ -1,7 +1,7 @@
 from sklearn.externals import joblib 
 def cgb(cat,sex,brh):
     # Load the model from the file
-    model = joblib.load('cgb.pkl') 
+    model = joblib.load('models/cgb.pkl') 
     # Use the loaded model to make predictions 
     ge=0
     ob=0
@@ -42,4 +42,26 @@ cat=input("Enter the category:")
 sex=input("Enter Gender:")
 brh=input("Enter branch:")
 print("Predicted CPI is:",cgb(cat,sex,brh))
+
+
+def cpiPrediction(spi_1, spi_2):
+    model2 = joblib.load('models/spi1_spi2_cpi.pkl') 
+    inputs = [[spi_1, spi_2]]
+    cpi = model2.predict(inputs)
+    return round(cpi[0],2)
+
+# spi_1 = float(input("Enter spi in sem 1:"))
+# spi_2 = float(input("Enter spi in sem 2:"))
+# print("Your Predicted CPI is: ",cpiPrediction(spi_1, spi_2) )
+
+def ma102GradePrediction(grade1):
+    model3 = joblib.load('models/ma101_ma102.pkl') 
+    inputs = [[grade1]]
+    grade2 = model3.predict(inputs)
+    cp = grade2[0][0]
+    return round(cp,0)
+    
+# grade = int(input("Enter grade in MA101:"))
+# print("Your Predicted grade in MA102 is: ", ma102GradePrediction(grade))
+
 

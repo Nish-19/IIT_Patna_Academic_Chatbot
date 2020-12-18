@@ -12,17 +12,23 @@ def GradeDistribution ( subcode ):
     labels = ["AA", "AB", "BB", "BC", "CC", "CD", "DD", "F"]
     value = grades.groupby('grade').size()
     plt.pie(value, labels = labels, autopct = "%.1f%%")
+    plt.show()
     
 #2. A function to show what subjects are available for a given branch in a given sem with their credits  
 def SubjectWeightage ( semno, branch ):
     tsem = allsem[semno]
     tsem = tsem.loc[tsem[branch] == 1]
     tsub = tsem.iloc[:,0].values
+    colour = []
+    for i in range(len(tsub)):
+        colour.append ((np.random.rand(),np.random.rand(), np.random.rand()))
     y_pos = np.arange(start =0,stop= 3*len(tsub),step = 3)
     wt = tsem.iloc[:,2].values
-    plt.barh(y_pos, wt, align='center', alpha=0.5)
-    plt.yticks(y_pos, tsub)
+    for i in range(len(y_pos)):
+        plt.barh(y_pos[i], wt[i], height = 1.5, align='center', alpha=0.5, color = colour[i])
+    plt.yticks(y_pos, tsub, color = 'purple')
     plt.xlabel('Credits')
+    plt.ylabel('Course')
     plt.title('Subject Weightage for Sem {} for Branch {}'.format(semno, branch))
     plt.show()
 
@@ -37,8 +43,18 @@ def SemResult( rollno, semno ):
     for i in result.index:
         result['point'][i] = points[result['grade'][i]]
     height = result['point']
-    plt.bar(y_pos, height, align='center', alpha=0.5)
-    plt.xticks(y_pos, grade)
+    colour = []
+    for i in range(len(grade)):
+        colour.append ((np.random.rand(),np.random.rand(), np.random.rand()))
+    heights = height.values
+    
+    for i in range(len(y_pos)):
+        plt.bar(y_pos[i], heights[i], width = 2, align='center', alpha=0.5, color = colour[i])
+        
+    for i, v in enumerate(height):
+        plt.text((3*i)-0.3, v + 0.1 , v, color='black', fontweight='bold')
+    plt.xticks(y_pos, grade, color = 'purple')
+    plt.xlabel('Course')
     plt.ylabel('GradePoint')
     plt.title('Result of Sem {} ({})'.format(semno, rollno))
     plt.show()
@@ -67,12 +83,21 @@ def AllSemsSpi( rollno ):
     for i in range(1, 9):
         height.append(spi[i])
         smno.append(i)
-    plt.bar(y_pos, height, align='center', alpha=0.5)
-    plt.xticks(y_pos, smno)
+    colour = []
+    for i in range(len(y_pos)):
+        colour.append ((np.random.rand(),np.random.rand(), np.random.rand()))
+    
+    for i in range(len(y_pos)):    
+        plt.bar(y_pos[i], height[i], width = 2, align='center', alpha=0.5, color = colour[i])
+        
+    for i, v in enumerate(height):
+        plt.text((3*i)-0.9, v + 0.1 , "{:.2f}".format(v), color='black', fontweight='bold')
+    plt.xticks(y_pos, smno, color = 'red')
+    plt.xlabel('Semester Number')
     plt.ylabel('SPI')
     plt.title('Result ({})'.format(rollno))
     plt.show()
-    
+
 #5. A function to visually compare performance of two courses of students enrolled in both of them. 
 def ComparePerformance(subcode1, subcode2):
     gradeDict = {}
@@ -97,7 +122,7 @@ def ComparePerformance(subcode1, subcode2):
     
     plt.scatter(gradeX, gradeY)
     plt.show()
-    
+
 # Dataframes to be used in functions
 df = pd.read_csv('ori_grades_data.csv')
 
@@ -126,23 +151,22 @@ for i in range(1,9):
     #Created dictionary to store sem-wise subject info
     allsem[i] = sem 
 
-
 # Function Calls
 subcode = "MA101"
-#GradeDistribution(subcode)
+GradeDistribution(subcode)
 
 semno = 4
 branch = "EE"
-#SubjectWeightage(semno, branch)
+SubjectWeightage(semno, branch)
 
 rollno = "1401CS20"
 semno = 4
-#SemResult( rollno, semno )
+SemResult( rollno, semno )
 
 rollno = "1401CS20"
-#AllSemsSpi(rollno)
+AllSemsSpi(rollno)
 
 subcode1 = "MA101"
 subcode2 = "MA102"
-#ComparePerformance( subcode1, subcode2)
+ComparePerformance( subcode1, subcode2)
 
