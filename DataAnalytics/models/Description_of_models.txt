@@ -1,15 +1,16 @@
 1)cgb.pkl
 
-Inputs- Caste,Gender,Branch.
-Outputs--CPI
+Inputs- Caste(string),Gender(string),Branch(string).
+Outputs--CPI(float)
 
 2)spi1_spi2_cpi.pkl
 
-Inputs- spi_1,spi_2
-Outputs--CPI
-
-Have a look at the cgb.py file(I have mentioned the if else conditions there)
+Inputs- spi_1(float),spi_2(float)
+Outputs--CPI(float)
 
 3)ma101vsma102.pkl
 Input-MA101 grade(in float).
 Output-Ma102 grade(in float).
+
+
+Have a look at the neel.py file(The file to run)
