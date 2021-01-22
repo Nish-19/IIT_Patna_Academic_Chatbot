@@ -13,4 +13,4 @@ Input-MA101 grade(in float).
 Output-Ma102 grade(in float).
 
 
-Have a look at the neel.py file(The file to run)
+Have a look at the prediction.py file(The file to run)
